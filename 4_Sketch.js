@@ -1,4 +1,7 @@
-const canvasSketch = require('canvas-sketch');
+// SKETCH AGENTS
+
+
+import canvasSketch from 'canvas-sketch'
 const random = require('canvas-sketch-util');
 
 const settings = {

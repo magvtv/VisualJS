@@ -1,5 +1,5 @@
 {
-  "name": "domestika-course",
+  "name": "creative-coding",
   "version": "1.0.0",
   "description": "",
   "main": "1_Sketch.js",
@@ -13,5 +13,8 @@
     "canvas-sketch": "^0.7.5",
     "canvas-sketch-util": "^1.10.0",
     "webfontloader": "^1.6.28"
+  },
+  "devDependencies": {
+    "canvas-sketch-cli": "^1.11.20"
   }
 }

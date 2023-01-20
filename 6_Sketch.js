@@ -7,9 +7,9 @@ const settings = {
     dimensions: [1440, 1440]
 }
 
-let letter = "H", manager;
-let fontSize = 200
-let fontFamily = 'Playfair Display, serif'
+let letter = "C", manager;
+let fontSize = 1000
+let fontFamily = 'serif'
 const typeCnv = document.createElement('canvas')
 const typeCtx = typeCnv.getContext('2d')
 
@@ -24,12 +24,12 @@ const sketch = ({ context, width, height }) => {
 
 
     return ({ context, width, height }) => {
-        typeCtx.fillStyle = "#152614";
+        typeCtx.fillStyle = "#072AC8";
         typeCtx.fillRect(0, 0, columns, rows)
 
         fontSize = columns
 
-        typeCtx.fillStyle = "#B5DFCA"
+        typeCtx.fillStyle = "#E9CE2C"
         typeCtx.font = ` ${fontSize}px ${fontFamily}`
         typeCtx.textBaseline = "middle"
         typeCtx.textAlign = "center"
@@ -52,13 +52,13 @@ const sketch = ({ context, width, height }) => {
         // typeCtx.rect(mx, my, mw, mh)
         typeCtx.stroke()
 
-        typeCtx.fillText(letter, 0, 0)
+        typeCtx.fillText(letter,0, 0)
         typeCtx.restore()
 
         const typeData = typeCtx.getImageData(0, 0, columns, rows).data
 
         
-        context.fillStyle = "#152614"
+        context.fillStyle = "#072AC8"
         context.fillRect(0, 0, width, height)
         context.textBaseline = "middle"
         context.textAlign = "center"
@@ -79,10 +79,10 @@ const sketch = ({ context, width, height }) => {
             blue = typeData[(i * 4) + 2];
             // alpha = typeData[(i * 4) + 3];
             // context.fillStyle = `rgba(${red}, ${green}, ${blue})`
-            context.fillStyle = "#B5DFCA"
+            context.fillStyle = "#E9CE2C"
 
             const glyph = getGlyph(red)
-            context.font = `${unit * 2}px ${fontFamily}`
+            context.font = `${unit * 1.5}px ${fontFamily}`
             if (Math.random() < .15)
                 context.font = `${unit * 5}px ${fontFamily}`
             
@@ -98,7 +98,7 @@ const sketch = ({ context, width, height }) => {
     }
 }
 
-// canvasSketch(sketch, settings)
+canvasSketch(sketch, settings)
 
 const keyPress = (a) => {
     letter = a.key.toUpperCase()
@@ -107,31 +107,27 @@ const keyPress = (a) => {
 
 const start = async () => {
     document.addEventListener('keyup', keyPress);
-    manager = await canvasSketch(sketch, settings);
+    // manager = await canvasSketch(sketch, settings);
 }
 start()
 
 const getGlyph = (x) => {
 
-    let randomGlyphs = '*,.^$#+-=/;<>'.split('')
+    let randomGlyphs = '*,.+-=><'.split('')
     if (x < 25) 
         return ''
     if (x < 50)
-        return ">"
+        return "+"
     if (x < 100)
+        return "_"
+    if (x < 125) 
+        return "-"
+    if (x < 150)
+        return "+"
+    if (x < 175) 
         return "!"
-    // if (x < 125) 
-    //     return "-"
-    // if (x < 150)
-    //     return "+"
-    // if (x < 175) 
-    //     return "!"
-    // if (x < 200)
-    //     return "*"
-    // if (x < 225)
-    //     return "#"
-    // if (x < 250)
-    //     return "&"
+    if (x < 200)
+        return "*"
     
     return random.pick(randomGlyphs)
 }

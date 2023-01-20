@@ -1,5 +1,5 @@
-const canvasSketch = require('canvas-sketch');
-const random = require('canvas-sketch-util/random')
+import canvasSketch from 'canvas-sketch'
+import random from 'canvas-sketch-util/random';
 
 const settings = {
     dimensions: [1080, 1080]
@@ -11,15 +11,15 @@ const degToRad = (degrees) => {
 
 const sketch = () => {
     return ({ context, width, height }) => {
-        context.fillStyle = 'grey';
+        context.fillStyle = '#23231A';
         context.fillRect(0, 0, width, height);
 
         let ox, oy, wd, ht, rd, x, y, num;
         context.lineWidth = 8;
         ox = oy = width * 0.5;
-        wd = width * 0.0012;
-        ht = height * .05;
-        rd = width * .25;
+        wd = width * 0.012;
+        ht = height * .045;
+        rd = width * .2;
         num = 12;
 
         for (let a = 0; a < num; a++) {
@@ -29,29 +29,29 @@ const sketch = () => {
             x = rd * Math.sin(angle);
             y = rd * Math.cos(angle);
 
-
-
             context.save();
             context.translate(x, y);
             context.translate(ox, oy);
             context.rotate(-angle);
-            context.scale(random.range(1, .45), 1);
+            context.scale(random.range(.7, 1.4), 1.35);
 
 
             context.beginPath();
             context.rect(-wd * .5, -ht * .5, wd, ht);
-            context.strokeStyle = 'whitesmoke';
+            context.strokeStyle = '#809848';
+            // context.strokeStyle = '#4DCCBD'
             context.stroke();
             context.restore();
-
+            
             context.save();
             context.translate(ox, oy);
             context.rotate(-angle);
-
+            
             context.beginPath();
-            context.lineWidth = random.range(3, 10);
-            context.arc(0, 0, rd, slice * -.3, slice * .3);
+            context.lineWidth = random.range(5, 15);
+            context.arc(0, 0, rd, slice * -.25, slice * .3);
             context.strokeStyle = 'white';
+
             context.stroke();
             context.restore();
 

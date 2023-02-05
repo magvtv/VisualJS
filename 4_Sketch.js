@@ -8,7 +8,7 @@ const settings = {
     dimensions: [1080, 1080]
 };
 
-const sketch = ({ width, height }) => {
+const sketch = ({ context, width, height }) => {
 
     let polka = [];
     var x, y;

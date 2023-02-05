@@ -9,15 +9,19 @@ const sketch = () => {
     return ({ context, width, height }) => {
         
       // The background color
-      // context.fillStyle = 'darkgrey';
-      context.fillStyle = '#03254E'
+      
+      // context.fillStyle = '#E2D1CA'
       context.fillRect(0, 0, width, height);
-
-    
+      
+      
       let x, y, wd, ht;
       context.beginPath();
-      // context.strokeStyle = 'green';
-      context.strokeStyle = '#EB9FEF'
+      
+      
+      //outer box stroke 
+      
+
+      context.strokeStyle = '#33B4EB'
       context.lineWidth = width * .01;
       // context.shadowBlur = 100
       // context.shadowColor = "yellow"
@@ -28,7 +32,7 @@ const sketch = () => {
       // printing out the order of boxes {2 for rubix increasing}
       for (let i = 0; i <= 2; i++) {
           for (let j = 0; j <= 2; j++) {
-              context.globalAlpha = .4;
+              context.globalAlpha = .75;
               wd = ht = width * .1;
               let gap, ix, iy;
               ix = iy = width * .3052;
@@ -41,15 +45,15 @@ const sketch = () => {
               context.fill();
 
             // Generate the inner boxes at random
-            let rand = Math.random() * 10;
+
+            let rand = Math.random() * 100;
             let off = width * 0.03;
-              if (rand < 5) {
-                context.globalAlpha = 1;
+            if (rand < 60) {
+                context.globalAlpha = 1
                 context.beginPath();
-                // context.fillStyle = 'black'
-                context.fillStyle = '#FECEE9'
-                context.fillRect(x + (off /2), y + (off / 2), wd - off, ht - off);
-                // Generate the inner boxes to form a P and a H
+                context.fillStyle = '#92AD94'
+                // context.fillStyle = '#F4DBD8'
+                context.fillRect(x + (off * .5), y + (off * .5), wd - off, ht - off);
               }
         }
     }

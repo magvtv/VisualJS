@@ -1,26 +1,34 @@
-const canvasSketch = require('canvas-sketch');
-const random = require('canvas-sketch-util/random')
+
+import canvasSketch from 'canvas-sketch'
+import random from 'canvas-sketch-util/random';
 
 const settings = {
-    dimensions: [1080, 1080]
+    dimensions: [1440, 1440]
 };
 
 const degToRad = (degrees) => {
-    return degrees / 180 * Math.PI;
+    return (degrees / 180) * Math.PI;
 }
 
 const sketch = () => {
     return ({ context, width, height }) => {
-        context.fillStyle = 'darkslategrey';
+
+        /* Canvas Background */
+        // context.fillStyle = '#702632';
+        context.fillStyle = '#006C67'
+        
+        /* Changing hue */
+        // context.globalAlpha = random.range(.9, 1)
         context.fillRect(0, 0, width, height);
 
-        let ox, oy, wd, ht, rd, x, y, num;
-        context.lineWidth = 8;
+        let ox, oy, wd, ht, rd, x, y, num, ns;
+        context.lineWidth = 20;
         ox = oy = width * 0.5;
-        wd = width * 0.0012;
-        ht = height * .05;
-        rd = width * .25;
+        wd = width * 0.012;
+        ht = height * .045;
+        rd = width * .325;
         num = 12;
+
 
         for (let a = 0; a < num; a++) {
             const slice = degToRad(360 / num);
@@ -31,44 +39,54 @@ const sketch = () => {
 
 
 
+            /* BLOCK A: Dials */
             context.save();
             context.translate(x, y);
-            context.translate(0, 0);
+            context.translate(ox, oy);
             context.rotate(-angle);
-            context.scale(random.range(.5, 1.1), random.range(.75, 1.2));
-
-
+            // context.rotate(-angle)
+            /* Changing the thickness */
+            context.scale(random.range(.5, 2), random.range(1.5, 2));
+            // context.scale(1.5, 1.5)
             context.beginPath();
-            context.shadowBlur = 60;
-            context.shadowColor = '';
-            context.rect(random.range(.34, -wd * .5), random.range(.18, -ht * .5), wd * 4, ht * 1.5);
-            context.strokeStyle = '';
-            // context.strokeStyle = 'floralwhite';
+            context.rect((-wd * .75), (-ht * .5), wd, ht);
+
+            context.strokeStyle = '#DE6449'
+            // context.globalAlpha = random.range(.8, 1)
             context.stroke();
+            // context.shadowBlur = random.range(10, 100)
+            // context.fill()
             context.restore();
 
-            context.save();
-            context.translate(0, 0);
-            context.rotate(-angle);
 
+
+
+            /* BLOCK B: Arcs */
+            context.save();
+            context.translate(ox, oy);
+            context.rotate(-angle * 30);
             context.beginPath();
-            context.globalAlpha = .91;
-            context.shadowBlur = 4;
-            context.shadowColor = 'white';
-            context.lineWidth = random.range(2, 7);
-            context.arc(0, 0, rd * random.range(.5, 1.5), slice * random.range(-8, 3), slice * random.range(1, 3));
-            let grd = context.createLinearGradient(0, 0, 170, 0)
-            // grd.addColorStop(0, "#00b9bc");
-            // grd.addColorStop(1, "#00a5a7");
-            grd.addColorStop(0, "#79cbb8");
-            grd.addColorStop(1, "#500472")
-            context.strokeStyle = grd;
+            context.lineWidth = random.range(15, 30)
+            // context.lineWidth = 10
+            // context.arc(0, 0, rd * 1.25, (slice * random.range(0, -.5)), (slice * random.range(0, .75)));
+            // context.arc(0, 0, rd, (slice * random.range(0, -.15)), (slice * random.range(1,  5)))
+            context.arc(0, 0, rd * random.range(.5, 1), (slice * random.range(1, -15)), (slice * random.range(-5, 10)))
+            // // context.strokeStyle = 'white';
+            // let grd = context.createLinearGradient(ox, oy, rd * .2, rd * .9)
+            // grd.addColorStop = ('.1', '#B5D6B2')
+            // grd.addColorStop = ('0.6', '#FF9F1C')
+
+            // context.strokeStyle = '#16697A';
+            // context.strokeStyle = grd
+            context.strokeStyle = '#FFFFFC'
+            /* Adding some change of hue to the stroke */
+            context.globalAlpha = random.range(.25, .75)
             context.stroke();
             context.restore();
 
         }
 
-        // circle
+        /* circle */
         // context.save();
         // context.translate(150, 295);
         // context.beginPath();
@@ -77,14 +95,6 @@ const sketch = () => {
         // context.strokeStyle = 'black';
         // context.stroke();
         // context.restore();
-
-
-
-
-
-
-
-
     };
 };
 

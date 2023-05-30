@@ -7,7 +7,7 @@ const settings = {
     dimensions: [1440, 1440]
 }
 
-let letter = "K", manager;
+let letter = "H", manager;
 let fontSize = 1440
 let fontFamily = 'serif'
 const typeCnv = document.createElement('canvas')
@@ -24,16 +24,18 @@ const sketch = ({ context, width, height }) => {
 
 
     return ({ context, width, height }) => {
-        typeCtx.fillStyle = "black";
+        /* Background color 1*/
+        typeCtx.fillStyle = "#404E4F"
         typeCtx.fillRect(0, 0, columns, rows)
         fontSize = columns
-        typeCtx.fillStyle = "#EEC170"
+        
+        /* Letter color 1 */
+        typeCtx.fillStyle = "#9BC1BC"
         typeCtx.font = ` ${fontSize}px ${fontFamily}`
-        typeCtx.textBaseline = "middle"
         typeCtx.textAlign = "center"
+        typeCtx.textBaseline = "middle"
 
         const metrics = typeCtx.measureText(letter)
-        // console.log(metrics);
         const mx = metrics.actualBoundingBoxLeft * -1
         const my = metrics.actualBoundingBoxAscent * -1
         const mw = metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight
@@ -56,10 +58,11 @@ const sketch = ({ context, width, height }) => {
         const typeData = typeCtx.getImageData(0, 0, columns, rows).data
 
         
-        context.fillStyle = "black"
+        /* Background color 2 */
+        context.fillStyle = "#404E4F"
+        context.textAlign = "center"
         context.fillRect(0, 0, width, height)
         context.textBaseline = "middle"
-        context.textAlign = "center"
 
         // context.drawImage(typeCnv, 0, 0)
         
@@ -71,32 +74,25 @@ const sketch = ({ context, width, height }) => {
             by = rw * unit;
 
 
-            let red, green, blue, alpha;
+            let red
             red = typeData[i * 4];
-            green = typeData[(i * 4) + 1];
-            blue = typeData[(i * 4) + 2];
-            // alpha = typeData[(i * 4) + 3];
-            // context.fillStyle = `rgba(${red}, ${green}, ${blue})`
-            // context.fillStyle = "#EEC170"
-            context.fillStyle = "#61C9A8"
+
+            /* Letter color 2 */
+            context.fillStyle = "#9BC1BC"
 
             const glyph = getGlyph(red)
             context.font = `${unit * 1.35}px ${fontFamily}`
             if (Math.random() < .15)
-                context.font = `${unit * 3.5}px ${fontFamily}`
-            
+                context.font = `${unit * 4}px ${fontFamily}`
             context.save();
             context.translate(ax, by);
             context.translate(unit * .5, unit * .5)
-
             context.fillText(glyph, 0, 0)
-
             // context.fillRect(0, 0, unit, unit);
             context.restore();
         }
     }
 }
-
 // canvasSketch(sketch, settings)
 
 const keyPress = (a) => {
@@ -112,21 +108,12 @@ start()
 
 const getGlyph = (x) => {
 
-    let randomGlyphs = '^*,.+-=><'.split('')
+    let randomGlyphs = '*.+-=/!`'.split('')
     if (x < 25) 
-        return ''
+        return " "
     if (x < 50)
-        return "+"
-    if (x < 100)
         return "_"
-    if (x < 125) 
-        return "-"
-    if (x < 150)
-        return "+"
-    if (x < 175) 
-        return "!"
-    if (x < 200)
+    if (x < 100)
         return "*"
-    
     return random.pick(randomGlyphs)
 }

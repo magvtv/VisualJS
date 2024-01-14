@@ -14,8 +14,7 @@ const sketch = () => {
     return ({ context, width, height }) => {
 
         /* Canvas Background */
-        // context.fillStyle = '#702632';
-        context.fillStyle = '#006C67'
+        context.fillStyle = '#A69888';
         
         /* Changing hue */
         // context.globalAlpha = random.range(.9, 1)
@@ -51,7 +50,7 @@ const sketch = () => {
             context.beginPath();
             context.rect((-wd * .75), (-ht * .5), wd, ht);
 
-            context.strokeStyle = '#DE6449'
+            context.strokeStyle = '#6B6D76'
             // context.globalAlpha = random.range(.8, 1)
             context.stroke();
             // context.shadowBlur = random.range(10, 100)
@@ -78,7 +77,7 @@ const sketch = () => {
 
             // context.strokeStyle = '#16697A';
             // context.strokeStyle = grd
-            context.strokeStyle = '#FFFFFC'
+            context.strokeStyle = '#FCBFB7'
             /* Adding some change of hue to the stroke */
             context.globalAlpha = random.range(.25, .75)
             context.stroke();

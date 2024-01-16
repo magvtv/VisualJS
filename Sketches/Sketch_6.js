@@ -25,12 +25,12 @@ const sketch = ({ context, width, height }) => {
 
     return ({ context, width, height }) => {
         /* Background color 1*/
-        typeCtx.fillStyle = "#404E4F"
+        typeCtx.fillStyle = "#5C0029"
         typeCtx.fillRect(0, 0, columns, rows)
         fontSize = columns
         
         /* Letter color 1 */
-        typeCtx.fillStyle = "#9BC1BC"
+        typeCtx.fillStyle = "#93E1D8"
         typeCtx.font = ` ${fontSize}px ${fontFamily}`
         typeCtx.textAlign = "center"
         typeCtx.textBaseline = "middle"
@@ -59,7 +59,7 @@ const sketch = ({ context, width, height }) => {
 
         
         /* Background color 2 */
-        context.fillStyle = "#404E4F"
+        context.fillStyle = "#5C0029"
         context.textAlign = "center"
         context.fillRect(0, 0, width, height)
         context.textBaseline = "middle"
@@ -78,7 +78,7 @@ const sketch = ({ context, width, height }) => {
             red = typeData[i * 4];
 
             /* Letter color 2 */
-            context.fillStyle = "#9BC1BC"
+            context.fillStyle = "#93E1D8"
 
             const glyph = getGlyph(red)
             context.font = `${unit * 1.35}px ${fontFamily}`

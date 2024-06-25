@@ -1,74 +1,76 @@
-import canvasSketch from 'canvas-sketch'
+// importing canvas-sketch module from node_modules
+const canvasSketch = require('canvas-sketch');
 
-const settings = {
-  dimensions: [ 1440, 1440 ]
+// defining colors array (allowing for future customization)
+const colors = {
+  outerBoxStroke: '#4D5057',
+  background: '#CFCFCF',
+  innerBoxFill: '#3BC14A'
 };
 
+// canvas settings
+const settings = {
+  dimensions: [1080, 1080]
+};
 
+// Function to draw the cube like structure
 const sketch = () => {
-    return ({ context, width, height }) => {
-        
-      // The background color
-      
-      // context.fillStyle = '#E2D1CA'
-      context.fillRect(0, 0, width, height);
-      
-      
-      let x, y, wd, ht;
-      context.beginPath();
-      
-      
-      //outer box stroke 
-      
+  // Function to draw outer grid
+  const drawOuterGrid = (context, width) => {
+    const gap = width * 0.03;
+    const boxSize = width * 0.125;
+    const startX = width * 0.257;
+    const startY = width * 0.257;
 
-      context.strokeStyle = '#33B4EB'
-      context.lineWidth = width * .01;
-      // context.shadowBlur = 100
-      // context.shadowColor = "yellow"
-      // context.fillRect(20, 20, 100, 20)
-      
+    context.beginPath();
+    context.strokeStyle = colors.outerBoxStroke;
+    context.lineWidth = width * 0.01;
 
-      
-      // printing out the order of boxes {2 for rubix increasing}
-      for (let i = 0; i <= 2; i++) {
-          for (let j = 0; j <= 2; j++) {
-              context.globalAlpha = .75;
-              wd = ht = width * .1;
-              let gap, ix, iy;
-              ix = iy = width * .3052;
-              gap = width * 0.03;
-              x = ix + (wd + gap) * i;
-              y = iy + (ht + gap) * j;
-              context.beginPath();
-              context.rect(x, y, wd, ht)
-              context.stroke();
-              context.fill();
+    for (let i = 0; i <= 2; i++) {
+      for (let j = 0; j <= 2; j++) {
+        const x = startX + (boxSize + gap) * i;
+        const y = startY + (boxSize + gap) * j;
 
-            // Generate the inner boxes at random
+        context.rect(x, y, boxSize, boxSize);
+        context.stroke();
+        context.fillStyle = colors.innerBoxFill;
 
-            let rand = Math.random() * 100;
-            let off = width * 0.03;
-            if (rand < 60) {
-                context.globalAlpha = 1
-                context.beginPath();
-                context.fillStyle = '#92AD94'
-                // context.fillStyle = '#F4DBD8'
-                context.fillRect(x + (off * .5), y + (off * .5), wd - off, ht - off);
-              }
+        // randomly decide whether to fill the inner box
+        if (Math.random() < 0.5) {
+          context.globalAlpha = 1;
+          context.fillRect(x + (gap / 2), y + (gap / 2), boxSize - gap, boxSize - gap);
+        } else {
+          context.globalAlpha = 0.75;
         }
+      }
     }
+  };
+
+  // Function to draw on canvas
+  return ({ context, width, height }) => {
+    // Set background color
+    context.fillStyle = colors.background;
+    context.fillRect(0, 0, width, height);
+
+    // Draw outer grid
+    drawOuterGrid(context, width, height);
   };
 };
 
-// canvasSketch(sketch, settings);
+// event handler on space bar press
+const keyPress = (event) => {
+  if (event.key === ' ') {
+    // render the canvas
+    if (manager) manager.render();
+  }
+};
 
-const keyPress = (a) => {
-  if (a.key === 'Space')
-    manager.render()
-}
-
+// start function to initialize canvas sketch
 const start = async () => {
-  document.addEventListener('keydown', keyPress);
+  document.addEventListener('keydown', keyPress); // add event listener for keydown
+
+  // initialize canvas sketch
   manager = await canvasSketch(sketch, settings);
-}
-start()
+};
+
+start();

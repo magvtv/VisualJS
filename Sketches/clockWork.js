@@ -24,6 +24,8 @@ const colors = {
     arcStroke: '#E6E4CE'
 }
 
+
+
 // Function to create the canvas sketch
 const sketch = () => {
   return ({ context, width, height }) => {
@@ -31,7 +33,7 @@ const sketch = () => {
     context.fillStyle = colors.background;
     context.fillRect(0, 0, width, height);
 
-    // variables for drawing elements
+    // variables for positioning and sizing drawing elements
     let ox = width * 0.5;
     let oy = ox;
     let wd = width * 0.012;
@@ -44,7 +46,7 @@ const sketch = () => {
       context.save();
       context.translate(x + ox, y + oy);
       context.rotate(-angle);
-      context.scale(random.range(1, 2.5), 2);
+      context.scale(random.range(2, 2.5), 1.8);
       context.beginPath();
       context.rect(-wd * 0.5, -ht * 0.5, wd, ht);
       context.strokeStyle = colors.rectangleStroke;
@@ -55,11 +57,10 @@ const sketch = () => {
     // Function to draw rotated arcs
     const drawRotatedArc = (angle) => {
         context.save();
-
         context.translate(ox, oy);
         context.rotate(-angle);
         context.beginPath();
-        context.lineWidth = random.range(10, 25);
+        context.lineWidth = random.range(10, 20);
         context.arc(0, 0, rd, degToRad(-15), degToRad(50));
         context.strokeStyle = colors.arcStroke;
         context.stroke();
@@ -82,6 +83,20 @@ const sketch = () => {
   };
 };
 
-// Initialize the canvas sketch
-canvasSketch(sketch, settings);
+// Event handler for key press (spacebar)
+let manager; 
+const keyPress = (event) => {
+  if (event.key === ' ') {
+    manager.render(); // Render canvas with new color scheme
+  }
+};
+
+const start = async () => {
+  document.addEventListener('keydown', keyPress); // Add event listener for keydown
+  // Initialize canvas sketch
+  manager = await canvasSketch(sketch, settings);
+};
+
+// Call start function to begin
+start();
 

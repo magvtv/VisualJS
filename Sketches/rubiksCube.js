@@ -18,7 +18,7 @@ const colors = {
 
 // canvas settings
 const settings = {
-  dimensions: [1080, 1080]
+  dimensions: [1080, 1080],
 };
 
 // Function to draw the cube like structure

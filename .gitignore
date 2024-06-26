@@ -1,6 +1,4 @@
-Sketches/node_modules
+Sketches/node_modules/
 LICENSE
-Sketches/package.json
 Sketches/package-lock.json
-README.md
-/.vscode
+.vscode/

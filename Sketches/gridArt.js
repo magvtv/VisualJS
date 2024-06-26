@@ -3,16 +3,27 @@
 - currently not rendering some of the cells
 
 */
-const canvasSketch = require('canvas-sketch');
-const random = require('canvas-sketch-util/random')
+
+import canvasSketch from 'canvas-sketch'
+import random from 'canvas-sketch-util/random'
+import { Pane } from 'tweakpane'
+
+
 
 const settings = {
 	dimensions: [1080, 1080],
+	animate: true
 };
 
+
+const gridParameters = {
+	columns: 5,
+	rows: 15
+}
+
 const colors = {
-	background: '#138A36',
-	gridStroke: '#04E824'
+	background: '#F7567C',
+	gridStroke: '#FCFCFC'
 }
 
 const sketch = () => {
@@ -20,8 +31,8 @@ const sketch = () => {
 		context.fillStyle = colors.background;
 		context.fillRect(0, 0, width, height);
 
-		const numColumns = 8,
-			numRows = 8. ,
+		const numColumns = gridParameters.columns,
+			numRows = gridParameters.rows,
 			numUnits = numColumns * numRows,
 			gridWidth = width * 0.7,
 			gridHeight = height * 0.7,
@@ -39,7 +50,7 @@ const sketch = () => {
 				ht = cellHeight * 0.8;
 			const rnd = random.noise2D(ox, oy, 0.001),
 				angle = rnd * Math.PI * 0.125,
-				scale = ((rnd + 1) / 2) * 15
+				scale = ((rnd + 1) / 2) * 20
 			
 			
 			context.lineWidth = scale;
@@ -59,6 +70,27 @@ const sketch = () => {
 };
 
 
+const createControlPane = () => {
+	const pane = new Pane()
+	let folder;
+
+	folder = pane.addFolder({
+		title: 'Grid',
+	})
+
+	folder.addInput(gridParameters, 'columns', {
+		min: 3,
+		max: 10,
+		step: 1
+	})
+
+	folder.addInput(gridParameters, 'rows', {
+		min: 5,
+		max: 30,
+		step: 1
+	})
+}
+
 let manager;
 const renderArt = async () => {
 	const keyPress = (event) => {
@@ -70,7 +102,7 @@ const renderArt = async () => {
 	manager = await canvasSketch(sketch, settings);
 }
 
-
+createControlPane()
 renderArt()
 
 

@@ -4,19 +4,24 @@
 
 */
 const canvasSketch = require('canvas-sketch');
+const random = require('canvas-sketch-util/random')
 
 const settings = {
 	dimensions: [1080, 1080],
 };
 
+const colors = {
+	background: '#138A36',
+	gridStroke: '#04E824'
+}
+
 const sketch = () => {
 	return ({ context, width, height }) => {
-		// context.fillStyle = '#242423';
-		context.fillStyle = '#F5CB5C';
+		context.fillStyle = colors.background;
 		context.fillRect(0, 0, width, height);
 
-		const numColumns = 5,
-			numRows = 4,
+		const numColumns = 8,
+			numRows = 8. ,
 			numUnits = numColumns * numRows,
 			gridWidth = width * 0.7,
 			gridHeight = height * 0.7,
@@ -32,12 +37,18 @@ const sketch = () => {
 				oy = (row * cellHeight) + marginY + (cellHeight * 0.5),
 				wd = cellWidth * 0.8,
 				ht = cellHeight * 0.8;
-			// const rnd = random.noise2D(ox, oy), turn = rnd * Math.PI
+			const rnd = random.noise2D(ox, oy, 0.001),
+				angle = rnd * Math.PI * 0.125,
+				scale = ((rnd + 1) / 2) * 15
+			
+			
+			context.lineWidth = scale;
+			context.strokeStyle = colors.gridStroke
 
 			context.save();
 			context.translate(ox, oy);
+			context.rotate(angle)
 			context.beginPath();
-			context.lineWidth = 5;
 			context.moveTo(wd * -0.5, 0);
 			context.lineTo(ht * 0.5, 0);
 			context.stroke();
@@ -47,4 +58,20 @@ const sketch = () => {
 	};
 };
 
-canvasSketch(sketch, settings);
+
+let manager;
+const renderArt = async () => {
+	const keyPress = (event) => {
+		if (event.key === ' ') {
+			manager.render()
+		}
+	}
+	document.addEventListener('keydown', keyPress)
+	manager = await canvasSketch(sketch, settings);
+}
+
+
+renderArt()
+
+
+

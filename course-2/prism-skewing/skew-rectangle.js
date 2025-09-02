@@ -16,24 +16,28 @@ const sketch = () => {
         const centerY = height * 0.5;
         const rectWidth = width * 0.6;
         const rectHeight = height * 0.1;
-        
+
         // First skewed rectangle (original)
-        const angleOne = maths.degToRad(30);
-        drawSkewedRectangle(context, centerX, centerY, rectWidth, rectHeight, angleOne, "teal");
-        
+        context.save();
+        context.translate(centerX, centerY);
+        drawSkewedRectangle(context);
+        context.restore();
+
         // Second skewed rectangle (adjust angle/position as desired)
-        const angleTwo = maths.degToRad(150);
-        drawSkewedRectangle(context, centerX, centerY + height * 0.2, rectWidth, rectHeight, angleTwo, "teal");
+        // context.save();
+        // context.translate(centerX, centerY + height * 0.2);
+        // drawSkewedRectangle(context, rectWidth, rectHeight, 150, "teal");
+        // context.restore();
     }
 }
 
 // Function to draw the skewed rectangle
-const drawSkewedRectangle = (context, centerX, centerY, rectWidth, rectHeight, angleRadians, strokeStyle = "teal") => {
-    const rx = Math.cos(angleRadians) * rectWidth;
-    const ry = Math.sin(angleRadians) * rectWidth;
+const drawSkewedRectangle = (context, rectWidth = 600, rectHeight = 200, degrees = 30, strokeStyle = "teal") => {
+    const angle = maths.degToRad(degrees);
+    const rx = Math.cos(angle) * rectWidth;
+    const ry = Math.sin(angle) * rectWidth;
 
     context.save();
-    context.translate(centerX, centerY);
     context.strokeStyle = strokeStyle;
     context.translate(rx * -0.5, (ry + rectHeight) * -0.5);
 
